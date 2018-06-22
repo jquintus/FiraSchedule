@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Html.fs" />
+    <Compile Include="Io.fs" />
     <Compile Include="HeaderGenerator.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

@@ -1,49 +1,24 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
-open System.IO
-open System.Text
+﻿open System
 open HeaderGenerator
+open Io
 
-let header = """
-<html>
-    <head>
-        <link rel="stylesheet" href="styles.css"/>
-    </head>
-<body>
-"""
-
-let footer = """
-    </table>
-<body>
-<html>
-"""
-
+// Output
 let output = "C:\\test\\schedule.html"
 
-let append text (sb:StringBuilder) =
-    sb.AppendLine(text) 
-
-let sbToString (sb:StringBuilder) =
-    sb.ToString()
-
-let sbCreate =
-    new StringBuilder()
-
+// Input
 let startDate = new DateTime (2018, 4, 25)
 let endDate = new DateTime (2018, 9, 3)
 
 [<EntryPoint>]
 let main argv =
 
-    let text = 
-        sbCreate        
-        |> append header
-        |> append (generateThead startDate endDate)
-        |> append footer        
-        |> sbToString
+    let saveToDisk = write output
 
-    File.WriteAllText(output, text)
+    sbCreate
+    |> append Html.header
+    |> append (generateThead startDate endDate)
+    |> append Html.footer        
+    |> sbToString
+    |> saveToDisk
 
     0
-
