@@ -6,10 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="TableBodyGenerator.fs" />
     <Compile Include="Css.fs" />
     <Compile Include="Html.fs" />
     <Compile Include="Io.fs" />
-    <Compile Include="HeaderGenerator.fs" />
+    <Compile Include="TableHeaderGenerator.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

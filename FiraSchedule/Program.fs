@@ -1,5 +1,5 @@
 ﻿open System
-open HeaderGenerator
+open TableHeaderGenerator
 open Io
 
 // Output
@@ -19,6 +19,7 @@ let main argv =
     sbCreate
     |> append Html.header
     |> append (generateThead startDate endDate)
+    |> append TableBodyGenerator.tableBody
     |> append Html.footer        
     |> sbToString
     |> htmlSaver

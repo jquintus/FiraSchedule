@@ -1,4 +1,4 @@
-﻿module HeaderGenerator
+﻿module TableHeaderGenerator
 
 open System
 
