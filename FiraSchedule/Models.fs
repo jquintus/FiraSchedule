@@ -12,3 +12,9 @@ type Person = {
     name: string
     statuses: string list 
 }
+
+type Model = {
+    people: Person list
+    startDate: DateTime
+    endDate: DateTime
+}
