@@ -15,4 +15,6 @@ th, td {
     width: 75px
 }
 
+tr.emptyLine { height: 15px }
+
 """

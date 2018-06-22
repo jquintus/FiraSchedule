@@ -20,6 +20,7 @@ let main argv =
     |> append Html.header
     |> append (generateThead startDate endDate)
     |> append TableBodyGenerator.tableBody
+    |> append TableBodyGenerator.bodyFooter
     |> append Html.footer        
     |> sbToString
     |> htmlSaver

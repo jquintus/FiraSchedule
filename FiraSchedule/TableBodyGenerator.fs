@@ -61,5 +61,18 @@ let body data =
     |> List.map tr
     |> concatStrings
 
+let bodyFooter = 
+    """
+        <tr class="emptyLine"></tr>
+        <tr>
+            <td class="placeholder"></td>
+
+            <td class="complete">Complete</td>
+            <td class="in_progress">In Progress</td>
+            <td class="todo">To Do</td>
+            <td class="testing">Testing</td>
+            <td class="oof">OOF</td>
+        </tr>
+    """
 
 let tableBody = body allData
