@@ -3,7 +3,7 @@
 open System
 open System.IO
 open System.Text
-open Converter
+open HeaderGenerator
 
 let header = """
 <html>
