@@ -1,6 +1,6 @@
 ﻿module TableBodyGenerator
 
-type Person = { name: string; statuses: string list }
+open Models
 
 let concatStrings data =
     data
