@@ -3,7 +3,8 @@ open HeaderGenerator
 open Io
 
 // Output
-let output = "C:\\test\\schedule.html"
+let htmlOut = "C:\\test\\schedule.html"
+let cssOut = "c:\\test\\styles.css"
 
 // Input
 let startDate = new DateTime (2018, 4, 25)
@@ -12,13 +13,16 @@ let endDate = new DateTime (2018, 9, 3)
 [<EntryPoint>]
 let main argv =
 
-    let saveToDisk = write output
+    let htmlSaver = write htmlOut
+    let cssSaver = write cssOut
 
     sbCreate
     |> append Html.header
     |> append (generateThead startDate endDate)
     |> append Html.footer        
     |> sbToString
-    |> saveToDisk
+    |> htmlSaver
+
+    Css.all |> cssSaver
 
     0
