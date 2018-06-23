@@ -1,6 +1,7 @@
 ﻿module TableHeaderGenerator
 
 open System
+open Models
 
 let tableHeader = """
     <table cellspacing="0" cellpadding="0">
@@ -53,6 +54,6 @@ let tableBody startDate endDate =
         body <- sprintf "%s            %s\n" body currentTh
     body
 
-let generateThead startDate endDate =
-    let body = tableBody startDate endDate
+let generateThead model =
+    let body = tableBody model.startDate model.endDate
     sprintf "%s %s %s" tableHeader body tableFooter
