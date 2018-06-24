@@ -2,15 +2,30 @@
 
 open System
 
+type TicketStatus =
+    | Backlog
+    | Done
+    | InProgress
+    | Other
+
 type Ticket = { 
     assignee: string 
     startDate: DateTime
     endDate: DateTime
+    status: TicketStatus
 }
+
+type ScheduleStatus =
+    | Complete
+    | In_Progress
+    | To_Do
+    | Testing
+    | OOF
+    | Placeholder
 
 type Person = { 
     name: string
-    statuses: string list 
+    statuses: ScheduleStatus list 
 }
 
 type Model = {
@@ -18,54 +33,46 @@ type Model = {
     startDate: DateTime
     endDate: DateTime
 }
+let ticketsToModel (tickets: Ticket seq) = 
 
-let hardCodedPeople = 
-    [
-        { name = "Aliena";
-          statuses = ["complete"; "complete"; "complete"; "complete"; "complete"; "complete"; "complete"; "complete"; "in_progress"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "placeholder"; "testing"; "testing"; "testing";]
-        };
-
-        { name = "Charles";
-          statuses = ["placeholder"; "placeholder"; "complete"; "placeholder"; "in_progress"; "in_progress"; "in_progress"; "in_progress"; "in_progress"; "todo"; "oof"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "testing"; "testing"; "testing";]
-        };
-
-        { name = "Duke Signor";
-          statuses = ["placeholder"; "placeholder"; "placeholder"; "placeholder"; "complete"; "complete"; "complete"; "in_progress"; "in_progress"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "oof"; "todo"; "oof"; "oof"; "testing";]
-        };
-
-        { name = "Jacques";
-          statuses = ["oof"; "oof"; "oof"; "oof"; "oof"; "oof"; "oof"; "oof"; "oof"; "oof"; "placeholder"; "placeholder"; "placeholder"; "placeholder"; "placeholder"; "placeholder"; "placeholder"; "testing"; "testing"; "testing";]
-        };
-
-        { name = "Orlando";
-          statuses = ["placeholder"; "placeholder"; "complete"; "complete"; "complete"; "in_progress"; "in_progress"; "in_progress"; "in_progress"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "testing"; "testing"; "testing";]
-        };
-
-        { name = "Rosalind";
-          statuses = ["placeholder"; "placeholder"; "placeholder"; "placeholder"; "complete"; "complete"; "complete"; "placeholder"; "in_progress"; "in_progress"; "oof"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "testing"; "testing"; "testing";]
-        };
-
-        { name = "Touchstone";
-          statuses = ["placeholder"; "placeholder"; "complete"; "complete"; "complete"; "complete"; "complete"; "oof"; "in_progress"; "todo"; "todo"; "todo"; "todo"; "todo"; "todo"; "placeholder"; "placeholder"; "testing"; "testing"; "testing";]
-        };
-
-        { name = "Olivia";
-          statuses = ["placeholder"; "placeholder"; "complete"; "complete"; "complete"; "complete"; "complete"; "complete"; "in_progress"; "in_progress"; "in_progress"; "in_progress"; "in_progress"; "in_progress"; "placeholder"; "placeholder"; "placeholder"; "testing"; "testing"; "testing";]
-        };
-    ]
-
-
-let ticketsToModel (tickets: Ticket list) = 
     let startDate = 
         tickets
-        |> List.map (fun t -> t.startDate)
-        |> List.min
+        |> Seq.map (fun t -> t.startDate)
+        |> Seq.min
+
     let endDate = 
         tickets
-        |> List.map (fun t -> t.endDate)
-        |> List.max
+        |> Seq.map (fun t -> t.endDate)
+        |> Seq.max
+    
+    
+    let ticketsToStatuses (tickets:Ticket seq) =
+        tickets 
+        |> Seq.sortBy (fun t -> t.startDate)
+        |> Seq.map (fun t -> t.assignee)
+        |> ignore
+
+        [
+            ScheduleStatus.Placeholder
+            ScheduleStatus.Complete
+            ScheduleStatus.To_Do
+            ScheduleStatus.OOF
+            ScheduleStatus.In_Progress
+            ScheduleStatus.Testing
+        ]
+
+    let ticketGroupToPerson (name, tickets) =
+        { 
+            name = name
+            statuses = ticketsToStatuses tickets
+        }
+
+    let people = 
+        tickets
+        |> Seq.groupBy (fun t -> t.assignee)
+        |> Seq.map ticketGroupToPerson
     {
         startDate = startDate
         endDate = endDate
-        people = hardCodedPeople
+        people = people |> Seq.toList
      }

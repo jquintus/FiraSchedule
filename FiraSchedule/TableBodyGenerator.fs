@@ -18,8 +18,16 @@ let bodyFooter =
     """
 
 let generateTableBody model = 
-    let td =
-        sprintf "            <td class=\"%s\"></td>\n"
+    let td status =
+        let statusClass = match status with
+            | Complete     -> "complete"
+            | In_Progress  -> "in_progress"
+            | To_Do        -> "todo"
+            | Testing      -> "testing"
+            | OOF          -> "oof"
+            | Placeholder  -> "placeholder"
+
+        sprintf "            <td class=\"%s\"></td>\n" statusClass
 
     let tr person =
         person.statuses
