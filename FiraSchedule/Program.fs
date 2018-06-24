@@ -1,5 +1,4 @@
-﻿open System
-open TableHeaderGenerator
+﻿open TableHeaderGenerator
 open Io
 open Models
 
