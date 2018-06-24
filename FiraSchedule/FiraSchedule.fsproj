@@ -6,13 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Models.fs" />
-    <Compile Include="TableBodyGenerator.fs" />
-    <Compile Include="Css.fs" />
-    <Compile Include="Html.fs" />
     <Compile Include="Io.fs" />
-    <Compile Include="TableHeaderGenerator.fs" />
+    <Compile Include="Html.fs" />
+    <Compile Include="Models.fs" />
     <Compile Include="Input.fs" />
+    <Compile Include="TableBodyGenerator.fs" />
+    <Compile Include="TableHeaderGenerator.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

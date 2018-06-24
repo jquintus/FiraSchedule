@@ -28,6 +28,6 @@ let main argv =
     |> sbToString
     |> htmlSaver
 
-    Css.all |> cssSaver
+    Html.css|> cssSaver
 
     0
