@@ -20,12 +20,12 @@ let main argv =
         Input.generateData csvFile
         |> ticketsToModel
 
-    sbCreate
-    |> append Html.header
-    |> append (generateThead model)
-    |> append TableBodyGenerator.tableBody
-    |> append TableBodyGenerator.bodyFooter
-    |> append Html.footer        
+    createStringBuilder
+    |> appendText Html.header
+    |> appendFunc generateThead model
+    |> appendFunc TableBodyGenerator.generateTableBody model
+    |> appendText TableBodyGenerator.bodyFooter
+    |> appendText Html.footer        
     |> sbToString
     |> htmlSaver
 

@@ -3,14 +3,18 @@
 open System.IO
 open System.Text
 
-let append text (sb:StringBuilder) =
+let createStringBuilder =
+    new StringBuilder()
+
+let appendText text (sb:StringBuilder) =
     sb.AppendLine(text) 
+
+let appendFunc f x sb =
+    let text = f x
+    appendText text sb
 
 let sbToString (sb:StringBuilder) =
     sb.ToString()
-
-let sbCreate =
-    new StringBuilder()
 
 let write path content =
     File.WriteAllText(path, content)

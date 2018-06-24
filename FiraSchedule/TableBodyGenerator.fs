@@ -75,4 +75,5 @@ let bodyFooter =
         </tr>
     """
 
-let tableBody = body allData
+let generateTableBody model = 
+    body allData
