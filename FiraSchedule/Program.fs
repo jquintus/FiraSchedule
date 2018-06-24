@@ -1,6 +1,6 @@
 ﻿open TableHeaderGenerator
 open Io
-open Models
+open ModelProcessor
 
 // Output
 let htmlOut = "C:\\test\\schedule.html"
@@ -28,6 +28,6 @@ let main argv =
     |> sbToString
     |> htmlSaver
 
-    Html.css|> cssSaver
+    Html.css |> cssSaver
 
     0
