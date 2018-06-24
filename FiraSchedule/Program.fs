@@ -8,8 +8,6 @@ let htmlOut = "C:\\test\\schedule.html"
 let cssOut = "c:\\test\\styles.css"
 
 // Input
-let startDate = new DateTime (2018, 4, 25)
-let endDate = new DateTime (2018, 9, 3)
 let csvFile = @"C:\\test\\jira.csv"
 
 [<EntryPoint>]
