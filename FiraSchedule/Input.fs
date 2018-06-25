@@ -20,12 +20,18 @@ let generateData (path: string) =
         | InvariantEqual "in qa"       -> Done
         | InvariantEqual "in review"   -> Done
         | _                            -> Other
+    
+    let cleanName str = 
+        if (str = "") then
+            "Not Assigned"
+        else
+            str
 
     let tickets = Jira.Load(path)
     [ for row in tickets.Rows do
         
         yield {
-            assignee = row.Assignee
+            assignee = cleanName row.Assignee
             startDate = row.``Custom field (Start date)``
             endDate = row.``Custom field (End date)``
             status = strToStatus row.Status
