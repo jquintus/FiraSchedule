@@ -1,6 +1,8 @@
 ﻿module ModelProcessor
 
 open Models
+open System
+open Utils
 
 let ticketsToModel (tickets: Ticket seq) = 
 
@@ -14,22 +16,37 @@ let ticketsToModel (tickets: Ticket seq) =
         |> Seq.map (fun t -> t.endDate)
         |> Seq.max
     
-    
     let ticketsToStatuses (tickets:Ticket seq) =
-        tickets 
-        |> Seq.sortBy (fun t -> t.startDate)
-        |> Seq.map (fun t -> t.assignee)
-        |> ignore
 
-        [
-            ScheduleStatus.Placeholder
-            ScheduleStatus.Complete
-            ScheduleStatus.To_Do
-            ScheduleStatus.OOF
-            ScheduleStatus.In_Progress
-            ScheduleStatus.Testing
-        ]
+        let getTicketForWeek (thisWeek:DateTime) =
+            let nextWeek = addWeeks thisWeek 1
+            let filteredTickets = 
+                tickets
+                |> Seq.filter (fun t -> t.startDate <= nextWeek)
+                |> Seq.filter (fun t -> t.endDate > thisWeek)
+            
+            if Seq.isEmpty filteredTickets then
+                None
+            else
+                filteredTickets
+                |> Seq.maxBy (fun t -> t.endDate)
+                |> Some
 
+        let statusForWeek (date:DateTime) =
+            let maybeTicket = getTicketForWeek date
+            match maybeTicket with
+            | None -> Placeholder
+            | Some ticket -> 
+                match ticket.status with
+                | Backlog -> To_Do
+                | Done -> Complete
+                | InProgress -> In_Progress
+                | Other -> Placeholder
+
+        Utils.weeks startDate endDate
+        |> Seq.map statusForWeek
+        |> Seq.toList
+        
     let ticketGroupToPerson (name, tickets) =
         { 
             name = name
@@ -40,6 +57,7 @@ let ticketsToModel (tickets: Ticket seq) =
         tickets
         |> Seq.groupBy (fun t -> t.assignee)
         |> Seq.map ticketGroupToPerson
+        |> Seq.sortBy (fun s -> s.name)
     {
         startDate = startDate
         endDate = endDate
