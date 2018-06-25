@@ -21,6 +21,10 @@ let ticketsToModel (tickets: Ticket seq) =
         let (|LabelsContain|_|) str ticket =
             if ticket.labels |> List.contains str
             then Some() else None
+        let isVacation ticket =
+            match ticket with 
+            | LabelsContain "Vacation" -> 0
+            | _ -> 1
 
         let getTicketForWeek (thisWeek:DateTime) =
             let nextWeek = addWeeks thisWeek 1
@@ -32,7 +36,8 @@ let ticketsToModel (tickets: Ticket seq) =
                 None
             else
                 filteredTickets
-                |> Seq.maxBy (fun t -> t.endDate)
+                |> Seq.sortBy(fun t -> (isVacation t, t.endDate))
+                |> Seq.head
                 |> Some
 
         let statusForWeek (date:DateTime) =
