@@ -13,6 +13,8 @@ type Ticket = {
     startDate: DateTime
     endDate: DateTime
     status: TicketStatus
+    labels: string list
+    key: string
 }
 
 type ScheduleStatus =
@@ -23,9 +25,14 @@ type ScheduleStatus =
     | OOF
     | Placeholder
 
+type ScheduleItem = {
+    status: ScheduleStatus
+    key: string
+}
+
 type Person = { 
     name: string
-    statuses: ScheduleStatus list 
+    statuses: ScheduleItem list 
 }
 
 type Schedule = {

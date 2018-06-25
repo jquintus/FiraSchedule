@@ -18,9 +18,9 @@ let bodyFooter =
     """
 
 let generateTableBody model = 
-    let td status =
+    let td (schedule:ScheduleItem )=
         let statusClass = 
-            match status with
+            match schedule.status with
             | Complete     -> "complete"
             | In_Progress  -> "in_progress"
             | To_Do        -> "todo"
@@ -28,7 +28,7 @@ let generateTableBody model =
             | OOF          -> "oof"
             | Placeholder  -> "placeholder"
 
-        sprintf "            <td class=\"%s\"></td>\n" statusClass
+        sprintf "            <td class=\"%s\" title=\"%s\"></td>\n" statusClass schedule.key
 
     let tr person =
         person.statuses

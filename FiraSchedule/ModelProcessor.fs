@@ -18,6 +18,10 @@ let ticketsToModel (tickets: Ticket seq) =
     
     let ticketsToStatuses (tickets:Ticket seq) =
 
+        let (|LabelsContain|_|) str ticket =
+            if ticket.labels |> List.contains str
+            then Some() else None
+
         let getTicketForWeek (thisWeek:DateTime) =
             let nextWeek = addWeeks thisWeek 1
             let filteredTickets = 
@@ -34,14 +38,20 @@ let ticketsToModel (tickets: Ticket seq) =
 
         let statusForWeek (date:DateTime) =
             let maybeTicket = getTicketForWeek date
-            match maybeTicket with
-            | None -> Placeholder
-            | Some ticket -> 
-                match ticket.status with
-                | Backlog -> To_Do
-                | Done -> Complete
-                | InProgress -> In_Progress
-                | Other -> Placeholder
+            let key = match maybeTicket with
+                      | Some t -> t.key
+                      | None -> ""
+            let status = match maybeTicket with
+                         | None -> Placeholder
+                         | Some ticket -> 
+                             match ticket with
+                             | LabelsContain "Vacation" -> OOF
+                             | LabelsContain "Testing" -> Testing
+                             | {status = Backlog } -> To_Do
+                             | {status = Done } -> Complete
+                             | {status = InProgress } -> In_Progress
+                             | _ -> Placeholder
+            { key = key; status = status }
 
         Utils.weeks startDate endDate
         |> Seq.map statusForWeek
