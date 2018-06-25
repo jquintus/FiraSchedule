@@ -15,6 +15,7 @@ let generateData (path: string) =
         | InvariantEqual "Done"        -> Done
         | InvariantEqual "In QA"       -> Done
         | InvariantEqual "In Review"   -> Done
+        | InvariantEqual "In Master"   -> Done
         | _                            -> Other
     
     let cleanName str = 
