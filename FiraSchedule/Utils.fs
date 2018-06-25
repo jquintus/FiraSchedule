@@ -5,7 +5,7 @@ open System
 // Strings
 let concatStrings data =
     data
-    |> List.fold (+) System.String.Empty
+    |> Seq.fold (+) System.String.Empty
 
 // Dates
 let numberOfWeeks (startDate:DateTime) (endDate:DateTime) =
@@ -39,4 +39,11 @@ let getShortMonth (date:DateTime) =
     |  _ -> "???"
 
 let weeks startDate endDate =
-    1
+    let numOfWeeks = numberOfWeeks startDate endDate
+    let firstMonday = getMonday startDate
+    let addWeeks' = addWeeks firstMonday
+    
+    seq { 
+        for weekId in 0 .. (numOfWeeks - 1) do 
+            yield addWeeks' weekId 
+        }

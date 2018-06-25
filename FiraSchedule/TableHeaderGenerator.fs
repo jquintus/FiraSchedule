@@ -17,14 +17,10 @@ let generateThead model =
         sprintf "<th> %s-%i </th>" mth date.Day
 
     let tableBody startDate endDate = 
-        let mutable body = ""
-        let firstMonday = getMonday startDate
-        let weekCount = numberOfWeeks startDate endDate
-        for weekId in 1 .. weekCount do
-            let currentWeek = addWeeks firstMonday weekId
-            let currentTh = th currentWeek
-            body <- sprintf "%s            %s\n" body currentTh
-        body
+        weeks startDate endDate
+        |> Seq.map th
+        |> Seq.map (sprintf "            %s\n")
+        |> concatStrings
 
     let body = tableBody model.startDate model.endDate
 
