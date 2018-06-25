@@ -1,7 +1,7 @@
 ﻿module TableBodyGenerator
 
 open Models
-open Io
+open Utils
 
 let bodyFooter = 
     """
@@ -19,7 +19,8 @@ let bodyFooter =
 
 let generateTableBody model = 
     let td status =
-        let statusClass = match status with
+        let statusClass = 
+            match status with
             | Complete     -> "complete"
             | In_Progress  -> "in_progress"
             | To_Do        -> "todo"

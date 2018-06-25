@@ -1,7 +1,7 @@
 ﻿module TableHeaderGenerator
 
-open System
 open Models
+open Utils
 
 let tableHeader = """
     <table cellspacing="0" cellpadding="0">
@@ -11,44 +11,15 @@ let tableHeader = """
 let tableFooter = "        </thead>"
 
 let generateThead model =
-    let getMonday (dt:DateTime) =
-        let delta = 
-            DayOfWeek.Monday - dt.DayOfWeek 
-            |> float
-        dt.AddDays(delta)
 
-    let weeks (startDate:DateTime) (endDate:DateTime) =
-        let days = endDate - startDate
-        System.Math.Round (float days.Days / 7.0) |> int
-
-    let month (date:DateTime) = 
-        match date.Month with
-        |  1 -> "Jan"
-        |  2 -> "Feb"
-        |  3 -> "Mar"
-        |  4 -> "Apr"
-        |  5 -> "May"
-        |  6 -> "Jun"
-        |  7 -> "Jul"
-        |  8 -> "Aug"
-        |  9 -> "Sep"
-        | 10 -> "Oct"
-        | 11 -> "Nov"
-        | 12 -> "Dec"
-        |  _ -> "???"
-
-    let th (date:DateTime) = 
-        let mth = month date
+    let th date = 
+        let mth = getShortMonth date
         sprintf "<th> %s-%i </th>" mth date.Day
-
-    let addWeeks (date:DateTime) weekCount =
-        let daysToAdd = (weekCount * 7) |> float
-        date.AddDays(daysToAdd)
 
     let tableBody startDate endDate = 
         let mutable body = ""
         let firstMonday = getMonday startDate
-        let weekCount = weeks startDate endDate
+        let weekCount = numberOfWeeks startDate endDate
         for weekId in 1 .. weekCount do
             let currentWeek = addWeeks firstMonday weekId
             let currentTh = th currentWeek
@@ -56,4 +27,5 @@ let generateThead model =
         body
 
     let body = tableBody model.startDate model.endDate
+
     sprintf "%s %s %s" tableHeader body tableFooter

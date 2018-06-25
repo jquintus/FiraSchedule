@@ -18,7 +18,3 @@ let sbToString (sb:StringBuilder) =
 
 let write path content =
     File.WriteAllText(path, content)
-
-let concatStrings data =
-    data
-    |> List.fold (+) System.String.Empty
