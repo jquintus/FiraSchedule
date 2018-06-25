@@ -1,11 +1,19 @@
 ﻿module Utils
 
 open System
+open System.Globalization
 
 // Strings
 let concatStrings data =
     data
     |> Seq.fold (+) System.String.Empty
+
+let titleCase str = 
+    CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str)
+
+let (|InvariantEqual|_|) (str:string) arg = 
+    if String.Compare(str, arg, StringComparison.OrdinalIgnoreCase) = 0
+    then Some() else None
 
 // Dates
 let numberOfWeeks (startDate:DateTime) (endDate:DateTime) =

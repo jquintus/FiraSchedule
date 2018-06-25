@@ -2,30 +2,25 @@
 
 open FSharp.Data
 open Models
-open System
+open Utils
 
 type Jira = CsvProvider<"C:\\code\\FiraSchedule\\SampleData\\Jira.csv">
 
-
 let generateData (path: string) = 
-    let (|InvariantEqual|_|) (str:string) arg = 
-      if String.Compare(str, arg, StringComparison.OrdinalIgnoreCase) = 0
-        then Some() else None
-
     let strToStatus str =
         match str with 
-        | InvariantEqual "backlog"     -> Backlog
-        | InvariantEqual "in progress" -> InProgress
-        | InvariantEqual "done"        -> Done
-        | InvariantEqual "in qa"       -> Done
-        | InvariantEqual "in review"   -> Done
+        | InvariantEqual "Backlog"     -> Backlog
+        | InvariantEqual "In Progress" -> InProgress
+        | InvariantEqual "Done"        -> Done
+        | InvariantEqual "In QA"       -> Done
+        | InvariantEqual "In Review"   -> Done
         | _                            -> Other
     
     let cleanName str = 
         if (str = "") then
-            "Not Assigned"
+            " Not Assigned"
         else
-            str
+            Utils.titleCase str
 
     let tickets = Jira.Load(path)
     [ for row in tickets.Rows do

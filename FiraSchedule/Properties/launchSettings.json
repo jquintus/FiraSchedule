@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FiraSchedule": {
+      "commandName": "Project",
+      "commandLineArgs": "c:\\test\\jira.csv"
+    }
+  }
+}
