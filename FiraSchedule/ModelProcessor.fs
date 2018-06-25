@@ -26,8 +26,7 @@ let ticketsToModel (tickets: Ticket seq) =
             let nextWeek = addWeeks thisWeek 1
             let filteredTickets = 
                 tickets
-                |> Seq.filter (fun t -> t.startDate <= nextWeek)
-                |> Seq.filter (fun t -> t.endDate > thisWeek)
+                |> Seq.filter (fun t -> (t.startDate < nextWeek && t.endDate > thisWeek))
             
             if Seq.isEmpty filteredTickets then
                 None
