@@ -14,7 +14,7 @@ let generateThead model =
 
     let th date = 
         let mth = getShortMonth date
-        sprintf "<th> %s-%i </th>" mth date.Day
+        sprintf "<th> %i-%s </th>" date.Day mth
 
     let tableBody startDate endDate = 
         weeks startDate endDate
