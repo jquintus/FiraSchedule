@@ -41,9 +41,8 @@ let getShortMonth (date:DateTime) =
 let weeks startDate endDate =
     let numOfWeeks = numberOfWeeks startDate endDate
     let firstMonday = getMonday startDate
-    let addWeeks' = addWeeks firstMonday
     
     seq { 
         for weekId in 0 .. (numOfWeeks - 1) do 
-            yield addWeeks' weekId 
+            yield addWeeks firstMonday weekId 
         }
