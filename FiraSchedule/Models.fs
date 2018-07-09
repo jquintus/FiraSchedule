@@ -15,6 +15,7 @@ type Ticket = {
     status: TicketStatus
     labels: string list
     key: string
+    description: string
 }
 
 type ScheduleStatus =

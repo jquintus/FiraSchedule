@@ -42,6 +42,7 @@ let generateData (path: string) =
             endDate = cleanDate row.``Custom field (End date)``
             status = strToStatus row.Status
             key = row.``Issue key``
+            description = row.Summary
             labels = cleanList [
                                  row.Labels
                                  row.Labels2

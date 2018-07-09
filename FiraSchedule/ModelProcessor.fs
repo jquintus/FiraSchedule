@@ -43,7 +43,7 @@ let ticketsToModel (tickets: Ticket seq) =
         let statusForWeek (date:DateTime) =
             let maybeTicket = getTicketForWeek date
             let key = match maybeTicket with
-                      | Some t -> t.key
+                      | Some t -> sprintf "%s\n%s" t.key t.description
                       | None -> ""
             let status = match maybeTicket with
                          | None -> Placeholder
